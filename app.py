@@ -34,8 +34,8 @@ def download_pdf():
         summary = request.form['summary']
         keywords = request.form['keywords']
         text = request.form['text']
+        title = request.form['title']  # Ambil dari input user
 
-        title = "Summary Report"
         cue_points = keywords.replace(',', '<br/>')
         notes = text
         summary_text = summary
@@ -46,10 +46,12 @@ def download_pdf():
         temp.close()
 
         # Kirim file ke user
-        return send_file(temp.name, as_attachment=True, download_name="summary_report.pdf")
+        filename = f"{title.strip().replace(' ', '_')}.pdf"
+        return send_file(temp.name, as_attachment=True, download_name=filename)
     
     except Exception as e:
         return jsonify({'error': str(e)})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
