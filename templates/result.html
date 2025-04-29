@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset='UTF-8' /> 
+  <meta name='viewport' content='width=device-width, initial-scale=1' /> 
+  <title>Summary Result</title> 
+  <link rel="stylesheet" href="{{ url_for('static', filename='result.css') }}">
+</head> 
+
+
+<body> 
+    <div class="nav">
+        <h1>Summary Result</h1>
+    </div>
+  <div class='container'> 
+    
+
+    <div class='result-container'>
+      
+      <!-- Panel Keywords -->
+      <div class='keywords'>
+        <h2>Keywords</h2>
+        <p id='keywords'>{{ keywords }}</p>
+      </div>
+
+      <!-- Panel Summary -->
+      <div class='summary'>
+        <h2>Summary</h2>
+
+        <!-- Tombol Copy dan Download -->
+        <div class="button-group">
+          <button id='copyButton' class='copy-download-button'>Copy</button>
+          <form method="POST" action="{{ url_for('download_pdf') }}" style="display:inline;">
+            <input type="hidden" name="summary" value="{{ summary }}">
+            <input type="hidden" name="keywords" value="{{ keywords }}">
+            <input type="hidden" name="text" value="{{ text }}">
+            <button type="submit" class="copy-download-button">Download PDF</button>
+          </form>
+        </div>
+
+        <!-- Area ringkasan sebagai card -->
+        <div id='summaryText' class="summary-item">{{ summary }}</div>
+
+      </div>
+
+    </div>
+  </div>
+
+<script>
+// Copy ringkasan ke clipboard saat tombol copy diklik
+document.getElementById("copyButton").addEventListener("click", () => {
+  const summaryText = document.getElementById("summaryText").innerText;
+  navigator.clipboard.writeText(summaryText)
+    .then(() => {
+      alert("Summary copied to clipboard!");
+    })
+    .catch(err => {
+      console.error('Failed to copy: ', err);
+    });
+});
+
+// Download ringkasan sebagai file txt saat tombol download diklik
+document.getElementById("downloadButton").addEventListener("click", () => {
+  const textToSave = document.getElementById("summaryText").innerText;
+  const blob = new Blob([textToSave], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+
+  let a = document.createElement("a");
+  a.href = url; 
+  a.download = "summary.txt";
+  
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);      
+});
+</script>
+
+</body>
+</html>

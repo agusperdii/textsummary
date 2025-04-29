@@ -1,0 +1,194 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  background-image: url("kertas.png");
+  display: flex;
+  flex-direction: column; 
+  height: 80vh;
+  background-color: #ffffff;
+  color: #333;
+  line-height: 1.6;
+}
+
+.nav {
+  text-align: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #bababa;
+  margin-bottom: 20px;
+  color:  rgb(231, 227, 222);
+}
+
+.nav h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.container {
+  margin: auto;
+  width: 90%;
+  max-width: 1200px; /* Diperbesar dari 800px ke 1200px */
+  padding: 20px;
+}
+
+.result-container {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+  align-items: flex-start;
+}
+
+
+
+
+/* (Optional) Buat persiapan di halaman result nanti --------------------------------------*/
+.result-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+
+.keywords {
+  flex: 1;
+  background-color: rgb(243, 239, 234);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #33333337;
+}
+
+.keywords h2 {
+  padding: 20px;
+  font-size: 18px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.keywords p {
+  padding: 20px;
+  line-height: 1.8;
+  text-align: left;
+}
+
+/* Summary panel */
+.summary {
+  flex: 2;
+  background-color: rgb(243, 239, 234);
+  border: 1px solid #33333337;
+  border-radius: 16px;
+  overflow: hidden;
+  padding-bottom: 15px;
+  position: relative; /* Tambah supaya absolute child bisa diatur */
+}
+
+.summary h2 {
+  padding: 20px;
+  font-size: 18px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+  
+}
+
+.button-group {
+  position: absolute; /* Jadi absolute */
+  top: 20px; /* Sejajarkan atas */
+  right: 20px; /* Nempel kanan */
+  display: flex;
+  gap: 10px;
+}
+
+.copy-download-button {
+  padding: 8px 20px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+#copyButton {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+
+#copyButton::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'%3E%3C/path%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#downloadButton {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+#downloadButton::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'%3E%3C/path%3E%3Cpolyline points='7 10 12 15 17 10'%3E%3C/polyline%3E%3Cline x1='12' y1='15' x2='12' y2='3'%3E%3C/line%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.copy-download-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Summary text container */
+.summary-item {
+  background-color: #e6e6e6;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .result-container {
+    flex-direction: column;
+  }
+  
+  .keywords, .summary {
+    width: 100%;
+  }
+  
+  .button-group {
+    float: none;
+    justify-content: flex-end;
+    padding: 10px 20px 0;
+  }
+  
+  .summary h2 {
+    display: block;
+    width: 100%;
+  }
+}

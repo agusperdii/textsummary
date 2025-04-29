@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Text Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    
+    <div class="container">
+        <h1 class="main-title">Summarizer TF-IDF</h1>
+        <p class="subtitle">Text Summarization: Penerapan Algoritma TextRank dan TF-IDF pada Cornell Note-Taking untuk merangkum dan mengambil Keyword pada Teks Akademik Berbahasa Indonesia.</p>
+        <form id="summarizeForm">
+            <textarea id="textInput" name="text" placeholder='Enter your text and press "Summarize."' required></textarea>
+            <button type="submit" class="summarize-button">Summarize</button>
+        </form>
+    </div>
+
+<script>
+// Kirim data teks ke backend Flask /summarize endpoint
+document.getElementById('summarizeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const text = document.getElementById('textInput').value;
+    
+    fetch('/summarize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `text=${encodeURIComponent(text)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+        
+        // Redirect ke halaman hasil dengan summary & keywords sebagai query params
+        window.location.href = `/result?summary=${encodeURIComponent(data.summary)}&keywords=${encodeURIComponent(data.keywords)}&text=${encodeURIComponent(text)}`;
+        
+    })
+    .catch(err => console.error('Error:', err));
+});
+
+// Fungsi sederhana ekstraksi keyword berdasarkan frekuensi kata > 3 karakter
+function getKeywords(text) {
+  const words = text.split(/\s+/).filter(w => w.length > 3);
+  const freqMap = {};
+  
+  words.forEach(word => {
+      word = word.toLowerCase();
+      freqMap[word] = (freqMap[word] || 0) + 1;
+  });
+  
+  // Urutkan berdasarkan frekuensi tertinggi, ambil top10 keyword
+  return Object.entries(freqMap)
+               .sort((a,b) => b[1] - a[1])
+               .slice(0,10)
+               .map(entry => entry[0])
+               .join(', ');
+}
+</script>
+
+</body>
+</html>

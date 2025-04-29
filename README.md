@@ -1,2 +1,0 @@
-# textsummary
-Project DGX
